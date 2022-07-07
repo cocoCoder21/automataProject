@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IndentiFeel</title>
+    <title>Automate</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="../static/img/faces.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,12 @@
     <link rel="stylesheet" href="static/css/my_styles.css">
      <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.0.5/dist/webcam-easy.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;700&family=Lato:wght@700&family=Source+Code+Pro:wght@600;700;800&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
 
-      <!-------------------------- Inline CSS --------------------------------->
+
+    <!-------------------------- Inline CSS --------------------------------->
     <style>
         .img-responsive{
             height: 80vh !important;
@@ -34,7 +38,7 @@
       <div class="container-fluid">
         <a class="navbar-brand nav-font" href="#">
           <img src="static/images/indentiFeel-logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-          IdentiFeel
+          Automate
         </a>
       </div>
     </nav>
@@ -69,23 +73,39 @@
 										<header>
 											<h2>Regex 1</h2>
 										</header>
-										<h4 class="subheader-font"> ( a + b ) ( a + b )* ( aa + bb ) ( ab + ba ) ( a + b )* ( aba + baa ) </h4>
-                                        <form action="/">
+										<img src="static/images/1.png" class="add-radius alignment" alt="Regex1">
+                                        <h2 id ='input_str' class="subheader-font"><strong>String: </strong> {{ str }} </h2>
+                                        <h2 id ='display_regex1_result' class="subheader-font"><strong>Result: </strong> {{ answer }} </h2>
+
+                                        <div><form method="POST" action="/rgx1">
                                           <label class="subheader-font" for="reg1_input">Input any string:</label>
-                                          <input type="text" id="reg1_input" class="input-group-text" name="reg1_input"><br><br>
-                                          <input type="submit" class="btn btn-warning text-light upload-btn" value="Submit">
-                                        </form>
-										<a href="#dfa"><button type="submit" class="btn btn-warning text-light upload-btn"> DFA </button></a>
-                                        <a href="#cfg"><button type="submit" class="btn btn-warning text-light upload-btn"> CFG </button></a>
-                                        <a href="#pda"><button type="submit" class="btn btn-warning text-light upload-btn"> PDA </button></a>
+                                          <input type="text" id="reg1_input" class="input-group-text" name="rgx1_input"><br><br>
+                                          <input type="submit" id="enter-rgx1" class="btn btn-warning text-light" value="Submit">
+                                        </form></div>
+
+<!--                                                                                                        onclick="changeImage();"-->
+										<div class="add-top-padding alignment">
+                                            <span style="background-color: lightgreen; border-radius: 10px; padding: 28px 10px 30px 10px"><img src="static/images/dfa_button.png" alt="1"><a href="#dfa"><button type="submit"  class="btn btn-warning text-light upload-btn"> DFA </button></a></span>
+                                            <span style="background-color: lightblue; border-radius: 10px; padding: 28px 10px 30px 10px"><img src="static/images/cfg_button.png" alt="2"><a href="#cfg" class=""><button type="submit" class="btn btn-warning text-light add-top-padding" style="padding: 20px, 10px, 10px, 10px;"> CFG </button></a></span>
+                                            <span style="background-color: gray; border-radius: 10px; padding: 28px 10px 30px 10px"><img src="static/images/pda_button.png" alt="3"><a href="#pda"><button type="submit" class="btn btn-warning text-light add-top-padding" style="padding: 20px, 10px, 10px, 10px;"> PDA </button></a></span> </div>
 									</div>
                 </div>
             </div>
 
              <!------------ dfa, cfg, pda --------------------->
-            <div id="#dfa"> <h1> DFA HERE</h1></div>
-            <div id="#cfg"> <h1> CFG HERE</h1></div>
-            <div id="#pda"> <h1> PDA HERE</h1></div>
+            <div id="dfa" class="alignment">
+                <h2 style="padding: 20px;"> Deterministic Finite Automata for Regex 1</h2>
+                <img  style="border-radius: 15px;" id="show_dfa1" src="{{ sample }}" alt="CFG1">
+            </div>
+
+            <div id="cfg" class="alignment">
+                <h2 style="padding: 40px 10px 5px 10px;"> Context Free Grammar (CFG) for Regex 1</h2>
+                <img src="static/images/cfg1.png" alt="CFG1">
+            </div>
+
+            <div id="pda" class="alignment"> <h2 style="padding: 80px 10px 10px 20px;"> Push-down Automata for Regex 1</h2>
+                <img src="static/images/pda1.png" alt="CFG2">
+            </div>
 
         </div>
 
@@ -93,9 +113,61 @@
 
         <!------------------------------ FOOTER --------------------------------->
         <footer id="footer">
-						<p class="copyright footer-font">&copy; IdentiFeel 2022, Pahila</a>.</p>
+						<p class="copyright footer-font">&copy; Automate 2022, V-Tech</a>.</p>
 					</footer>
     </div>
+    <script>
+
+    function write() {
+      var text = document.form.input-rgx1.value;
+      return document.getElementById('id').innerHTML = text;
+    }
+
+
+    function changeImage() {
+
+              console.log('changed image')
+              var text = document.getElementById("input_str");
+              var command = text.value;
+
+              console.log(command)
+
+              var image = document.getElementById("show_dfa1");
+
+              if (command == "aaababaa") {
+                image.src = "static/images/aaababaa.gif"
+              } else if (command == "baaabbabbbaba") {
+                image.src = "static/images/baaabbabbbaba.gif"
+              } else if (command == "abbaabab") {
+                image.src = "static/images/abbaabab.gif"
+              } else if (command == "bbbabaabbabba") {
+                image.src = "static/images/bbbabaabbabba.gif"
+              } else{
+                image.src = "static/images/cannot.png"
+              }
+
+
+            }
+
+
+        $("#display_regex1_result").keyup(function(){
+            var text = $(this).val();
+
+            $.ajax({
+              url: "/regex1",
+              type: "get",
+              data: {answer: text},
+              success: function(response) {
+              },
+              error: function(xhr) {
+                //Do Something to handle error
+              }
+            });
+        });
+
+
+    </script>
+
 
 
      </script>
@@ -103,6 +175,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="static/js/script.js"></script>
+<!--    <script src="static/js/script.js"></script>-->
 </body>
 </html>

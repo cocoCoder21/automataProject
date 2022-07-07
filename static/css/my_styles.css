@@ -9,6 +9,10 @@ body {
 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+
+        font-family: 'Ubuntu', sans-serif !important;
+
+
 	}
 
 
@@ -64,7 +68,7 @@ body {
     font-size: 1rem;
     font-weight: normal;
     text-align: justify;
-    padding:20px 70px 30px 0px;
+    padding:10px;
 }
 
 .footer-font{
@@ -123,6 +127,10 @@ body {
     margin-top: 0px;
 }
 
+.alignment{
+    text-align: center;
+    padding: 20px;
+}
 
 /*------------------------- Override Bootstrap buttons ------------------------------*/
 
@@ -130,6 +138,9 @@ body {
     background-color: #8064A2 !important;
 }
 
+.add-radius{
+    border-radius: 10px;
+}
 
 /* ========================================== Third-Party Customization ======================================== */
 

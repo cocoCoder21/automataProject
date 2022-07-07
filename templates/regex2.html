@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IndentiFeel</title>
+    <title>Automate</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="../static/img/faces.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="static/css/my_styles.css">
      <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.0.5/dist/webcam-easy.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;700&family=Lato:wght@700&family=Source+Code+Pro:wght@600;700;800&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
 
       <!-------------------------- Inline CSS --------------------------------->
     <style>
@@ -34,7 +38,7 @@
       <div class="container-fluid">
         <a class="navbar-brand nav-font" href="#">
           <img src="static/images/indentiFeel-logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-          IdentiFeel
+          Automate
         </a>
       </div>
     </nav>
@@ -69,19 +73,39 @@
 										<header>
 											<h2>Regex 2</h2>
 										</header>
-										<h4 class="subheader-font"> ( 11 + 00 ) ( 1 + 0 )* ( 101 + 111 + 01 ) ( 00* + 11* ) ( 1 + 0 + 11 ) </h4>
-										<a href="#dfa"><button type="submit" class="btn btn-warning text-light upload-btn"> DFA </button></a>
-                                        <a href="#cfg"><button type="submit" class="btn btn-warning text-light upload-btn"> CFG </button></a>
-                                        <a href="#pda"><button type="submit" class="btn btn-warning text-light upload-btn"> PDA </button></a>
+										<img src="static/images/2.png" class="add-radius alignment" alt="Regex2">
+                                         <h3 id ='input_str' class="subheader-font"><strong>String: </strong> {{ str }} </h3>
+                                        <h3 id ='display_regex2_result' class="subheader-font"><strong>Result: </strong> {{ answer }} </h3>
+
+                                            <form method="post" action="/rgx2">
+                                              <label class="subheader-font" for="reg2_input">Input any string:</label>
+                                              <input type="text" id="reg2_input" class="input-group-text" name="rgx2_input"><br><br>
+                                              <input type="submit" class="btn btn-warning text-light upload-btn" value="Submit">
+                                            </form>
+
+										<div class="add-top-padding alignment">
+                                            <span style="background-color: lightgreen; border-radius: 10px; padding: 20px"><img src="static/images/dfa_button.png" alt="1"><a href="#dfa"><button type="submit"  class="btn btn-warning text-light upload-btn"> DFA </button></a></span>
+                                            <span style="background-color: lightblue; border-radius: 10px; padding: 20px"><img src="static/images/cfg_button.png" alt="2"><a href="#cfg" class=""><button type="submit" class="btn btn-warning text-light add-top-padding" style="padding: 20px, 10px, 10px, 10px;"> CFG </button></a></span>
+                                            <span style="background-color: gray; border-radius: 10px; padding: 20px"><img src="static/images/pda_button.png" alt="3"><a href="#pda"><button type="submit" class="btn btn-warning text-light add-top-padding" style="padding: 20px, 10px, 10px, 10px;"> PDA </button></a></span> </div>
 									    </div>
                 </div>
 
             </div>
 
             <!------------ dfa, cfg, pda --------------------->
-             <div id="#dfa"> <h1> DFA HERE</h1></div>
-            <div id="#cfg"> <h1> CFG HERE</h1></div>
-            <div id="#pda"> <h1> PDA HERE</h1></div>
+          <div id="dfa" class="alignment">
+                <h2 style="padding: 20px;"> Deterministic Finite Automata for Regex 2</h2>
+                <img  style="border-radius: 15px;" id="show_dfa2" src="{{ sample }}" alt="DFA2">
+            </div>
+
+            <div id="cfg" class="alignment">
+                <h2 style="padding: 40px 10px 5px 10px;"> Context Free Grammar (CFG) for Regex 2</h2>
+                <img src="static/images/cfg2.png" alt="CFG2">
+            </div>
+
+            <div id="pda" class="alignment"> <h2 style="padding: 80px 10px 10px 20px;"> Push-down Automata for Regex 2</h2>
+                <img src="static/images/pda2.png" alt="CFG2">
+            </div>
 
         </div>
 
@@ -89,12 +113,49 @@
 
         <!------------------------------ FOOTER --------------------------------->
         <footer id="footer">
-						<p class="copyright footer-font">&copy; IdentiFeel 2022, Pahila</a>.</p>
+						<p class="copyright footer-font">&copy; Automate 2022, V-tech</a>.</p>
 					</footer>
 
 
     </div>
 
+    <script>
+        $("#display_regex2_result").keyup(function(){
+            var text = $(this).val();
+
+            $.ajax({
+              url: "/regex2",
+              type: "get",
+              data: {answer: text},
+              success: function(response) {
+              },
+              error: function(xhr) {
+                //Do Something to handle error
+              }
+            });
+        });
+
+        function theCommand(imageFile) {
+              var commandInput = document.getElementById("commandInput");
+              var command = commandInput.value;
+
+              var image = document.getElementById("result");
+              image.src = imageFile;
+
+              if (command == "make duck noise") {
+                command = "QUACK QUACK";
+              } else if (command == "make rooster noise") {
+                command = "COCK-A-DOODLE-DOO";
+              } else if (command == "show duck image") {
+                command = "<img src='https://www.checkeins.de/sendungen/die-sendung-mit-der-maus/die-sendung-mit-dermaus-ente-100~_v-standard644_5fdf7b.jpg'></img>";
+              } else if (command != "make duck noise" || command != "make rooster noise") {
+                command = "Invalid command";
+              }
+
+              var commandSpan = document.getElementById("result");
+              commandSpan.innerHTML = command;
+            }
+    </script>
 
      </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
